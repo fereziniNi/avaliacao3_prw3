@@ -36,14 +36,14 @@ public class BorrachariaController {
 
     @GetMapping
     public ResponseEntity listarTodosDados(Pageable paginacao){
-        var pagina = consertoRepository.findAll(paginacao).map(DadosConsertoListagem::new);
+        var pagina = consertoRepository.findAll(paginacao);
         return ResponseEntity.ok(pagina);
     }
 
     @GetMapping("/resumo")
     public ResponseEntity listarAlgunsDados(){
-        var pagina = consertoRepository.findAllByAtivoTrue().map(DadosConsertoResumido::new);
-        return ResponseEntity.ok(pagina);
+        var lista = consertoRepository.findAllByAtivoTrue().stream().map(DadosConsertoResumido::new).toList();
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
